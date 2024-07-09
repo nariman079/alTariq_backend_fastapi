@@ -51,11 +51,3 @@ async def get_objects(
     return db_objects
 
 
-async def main():
-    data = await get_objects(obj=Discipline)
-    for i in data:
-        print(i)
-
-
-if __name__ == '__main__':
-    asyncio.run(main())
