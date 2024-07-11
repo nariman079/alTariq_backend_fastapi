@@ -93,6 +93,25 @@ async def update_object(
     )
     return None
 
+@db_action
+async def update_objects(
+        session: AsyncSession,
+        obj: Base,
+        obj_ids: List[int],
+        update_data: dict
+):
+    update_stmt = update(
+            obj
+        ).where(
+            obj.id.in_(obj_ids)
+        ).values(
+            **update_data
+        )
+    await session.execute(
+        update_stmt
+    )
+    return len(obj_ids)
+
 
 @db_action
 async def delete_objects(
@@ -130,36 +149,3 @@ async def delete_object(
     return None
 
 
-async def main():
-    new_discipline: Discipline = await create_object(
-        obj=Discipline(
-            title="Маджвид",
-            priority=12
-        )
-    )
-    discipline: Discipline = await get_object(
-        obj=Discipline,
-        obj_id=new_discipline.id-1
-    )
-    print(discipline.title)
-    # update_discipline = await update_object(
-    #     obj=Discipline,
-    #     obj_id=discipline.id,
-    #     update_data=dict(
-    #         title="Test Title"
-    #     )
-    # )
-    # obj_ids_for_delete = [discipline.id, discipline.id - 1]
-    #
-    # print(obj_ids_for_delete)
-    #
-    # deleted_objects = await delete_objects(
-    #     obj=Discipline,
-    #     obj_ids=obj_ids_for_delete
-    # )
-    #
-    # print(deleted_objects)
-
-
-if __name__ == '__main__':
-    asyncio.run(main())

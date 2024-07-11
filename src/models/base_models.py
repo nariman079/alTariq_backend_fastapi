@@ -53,6 +53,15 @@ class Image(Base):
 
 
 class Discipline(Base):
+    def __init__(
+            self,
+            title: str,
+            priority: int
+    ):
+        self.title = title
+        self.priority = priority
+        super(Base, self).__init__()
+
     """
     Модель дисциплины
     """
@@ -62,7 +71,7 @@ class Discipline(Base):
         Integer,
         primary_key=True
     )
-    title = Column(
+    title: str = Column(
         String
     )
     priority = Column(
