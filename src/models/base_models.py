@@ -109,6 +109,9 @@ class Teacher(Base):
     surname = Column(
         String
     )
+    experience = Column(
+        Integer
+    )
     about = Column(
         Text
     )
