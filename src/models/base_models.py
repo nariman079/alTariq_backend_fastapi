@@ -31,21 +31,8 @@ class Image(Base):
         Integer,
         primary_key=True
     )
-    filename = Column(
-        String
-    )
-    url = Column(
-        String
-    )
-    size = Column(
-        String
-    )
-    height = Column(
-        Integer
-    )
-    width = Column(
-        Integer
-    )
+    filename = Column(String)
+    url = Column(String)
     teacher = relationship(
         "Teacher",
         back_populates='image'
@@ -53,15 +40,6 @@ class Image(Base):
 
 
 class Discipline(Base):
-    def __init__(
-            self,
-            title: str,
-            priority: int
-    ):
-        self.title = title
-        self.priority = priority
-        super(Base, self).__init__()
-
     """
     Модель дисциплины
     """
@@ -71,13 +49,12 @@ class Discipline(Base):
         Integer,
         primary_key=True
     )
-    title: str = Column(
-        String
-    )
+    title = Column(String)
     priority = Column(
         Integer,
         default=0
     )
+    description = Column(String)
     teacher = relationship(
         "Teacher",
         secondary=association_table,
@@ -103,24 +80,12 @@ class Teacher(Base):
         String,
         unique=True
     )
-    name = Column(
-        String
-    )
-    surname = Column(
-        String
-    )
-    experience = Column(
-        Integer
-    )
-    about = Column(
-        Text
-    )
-    opportunities = Column(
-        Text
-    )
-    study_methods = Column(
-        Text
-    )
+    name = Column(String)
+    surname = Column(String)
+    experience = Column(Integer)
+    about = Column(Text)
+    opportunities = Column(Text)
+    study_methods = Column(Text)
     price = Column(
         Numeric(10, 0),
         default=0

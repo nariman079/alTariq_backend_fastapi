@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: ce6854c2952c
+Revision ID: f64e46e39c16
 Revises: 
-Create Date: 2024-07-09 12:49:22.346456
+Create Date: 2024-07-14 18:23:22.491884
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision: str = 'ce6854c2952c'
+revision: str = 'f64e46e39c16'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -30,7 +30,7 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('filename', sa.String(), nullable=True),
     sa.Column('url', sa.String(), nullable=True),
-    sa.Column('size', sa.String(), nullable=True),
+    sa.Column('size', sa.Integer(), nullable=True),
     sa.Column('height', sa.Integer(), nullable=True),
     sa.Column('width', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
@@ -41,6 +41,7 @@ def upgrade() -> None:
     sa.Column('email', sa.String(), nullable=True),
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('surname', sa.String(), nullable=True),
+    sa.Column('experience', sa.Integer(), nullable=True),
     sa.Column('about', sa.Text(), nullable=True),
     sa.Column('opportunities', sa.Text(), nullable=True),
     sa.Column('study_methods', sa.Text(), nullable=True),

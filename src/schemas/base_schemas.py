@@ -1,55 +1,32 @@
 from decimal import Decimal
-from typing import List
 
 from pydantic import BaseModel, EmailStr
 
-from src.enums.type_enums import Gender
 
-
-class CreateDisciplineSchema(BaseModel):
+class DisciplineBaseSchema(BaseModel):
     title: str
     priority: int
+    description: str
 
 
-class CreateTeacherSchema(BaseModel):
-    telegram_id: str | None = None
+class TeacherBaseSchema(BaseModel):
+    telegram_id: str
     email: EmailStr
     name: str
     surname: str
+    experience: int
     about: str
     opportunities: str
     study_methods: str
     price: Decimal
-    gender: Gender
-    image: bytes | None = None
-    disciplines_id: List[int]
+    gender: str
 
 
-class ListDisciplineSchema(BaseModel):
+class DisciplineTeacherListSchema(BaseModel):
     id: int
     title: str
 
 
-class ListTeacherSchema(BaseModel):
+class TeacherListSchema(TeacherBaseSchema):
     id: int
-    name: str
-    surname: str
-    price: Decimal
-    image_url: str
-    disciplines_title: List[str]
-    lesson_count: int
-    experience: int
-
-
-class DetailTeacherSchema(BaseModel):
-    name: str
-    surname: str
-    about: str
-    opportunities: str
-    study_methods: str
-    price: Decimal
-    gender: Gender
-    image_url: bytes
-    disciplines_id: List[int]
-    lesson_count: int
-    experience: int
+    
