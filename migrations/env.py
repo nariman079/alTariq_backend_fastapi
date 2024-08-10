@@ -5,6 +5,8 @@ from sqlalchemy import pool
 
 from alembic import context
 
+from config.settings import DB_HOST, DB_NAME, DB_PORT, DB_USER, DB_PASSWORD
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -19,6 +21,15 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 from src.models.base_models import Base
+
+section = config.config_ini_section
+config.set_section_option(section, 'DB_NAME', DB_NAME)
+config.set_section_option(section, 'DB_HOST', DB_HOST)
+config.set_section_option(section, 'DB_PASSWORD', DB_PASSWORD)
+config.set_section_option(section, 'DB_PORT', DB_PORT)
+config.set_section_option(section, 'DB_USER', DB_USER)
+
+
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, Numeric, ForeignKey, Table
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, Table, Float
 from sqlalchemy.dialects.postgresql import ENUM as PgEnum
 from sqlalchemy.orm import relationship
 
@@ -87,7 +87,7 @@ class Teacher(Base):
     opportunities = Column(Text)
     study_methods = Column(Text)
     price = Column(
-        Numeric(10, 0),
+        Float,
         default=0
     )
     gender = Column(

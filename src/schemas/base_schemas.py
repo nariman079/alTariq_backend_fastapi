@@ -1,6 +1,9 @@
 from decimal import Decimal
+from typing import Annotated, Optional
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field, PlainSerializer
+
+from src.enums.type_enums import Gender
 
 
 class DisciplineBaseSchema(BaseModel):
@@ -10,16 +13,34 @@ class DisciplineBaseSchema(BaseModel):
 
 
 class TeacherBaseSchema(BaseModel):
-    telegram_id: str
-    email: EmailStr
-    name: str
-    surname: str
-    experience: int
-    about: str
-    opportunities: str
-    study_methods: str
-    price: Decimal
-    gender: str
+    telegram_id: Annotated[str, Field(..., description="The unique Telegram ID of the teacher")]
+    email: Annotated[EmailStr, Field(..., description="The teacher's email address")]
+    name: Annotated[str, Field(..., description="The teacher's first name")]
+    surname: Annotated[str, Field(..., description="The teacher's surname")]
+    experience: Annotated[int, Field(..., description="Years of teaching experience", ge=0)]
+    about: Annotated[str, Field(..., description="A brief description about the teacher")]
+    opportunities: Annotated[str, Field(..., description="The opportunities offered by the teacher")]
+    study_methods: Annotated[str, Field(..., description="Study methods used by the teacher")]
+    price: Annotated[float, Field()]
+    gender: Annotated[Gender, Field()]
+
+    class Config:
+        orm_mode = True
+
+class TeacherUpdateSchema(BaseModel):
+    telegram_id: Optional[str] = None
+    email: Optional[EmailStr] = None
+    name: Optional[str] = None
+    surname: Optional[str] = None
+    experience: Optional[int] = None
+    about: Optional[str] = None
+    opportunities: Optional[str] = None
+    study_methods: Optional[str] = None
+    price: Optional[float] = None
+    gender: Optional[Gender] = None
+
+    class Config:
+        orm_mode = True
 
 
 class DisciplineTeacherListSchema(BaseModel):
@@ -27,6 +48,10 @@ class DisciplineTeacherListSchema(BaseModel):
     title: str
 
 
-class TeacherListSchema(TeacherBaseSchema):
+class TeacherListSchema(BaseModel):
     id: int
-    
+    name: Annotated[str, Field(..., description="The teacher's first name")]
+    surname: Annotated[str, Field(..., description="The teacher's surname")]
+    experience: Annotated[int, Field(..., description="Years of teaching experience", ge=0)]
+    discipline: Annotated[list, DisciplineTeacherListSchema]
+    discipline_count: Annotated[int, Field()]
